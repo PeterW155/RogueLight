@@ -16,10 +16,20 @@ public abstract class Weapon : MonoBehaviour
     /// The damage this weapon deals.
     /// </summary>
     public float Damage { get; protected set; } = 0.0f;
-
-    [Tooltip("The maximum amount of rounds this weapon has."),SerializeField] private int _maxRound;
     
-    [Tooltip("The damage this weapon deals."),SerializeField] private float _damage;
+    /// <summary>
+    /// The number of rounds increased every time the player picks up this object.
+    /// </summary>
+    public int PickUpIncrease { get; protected set; }
+
+    [Tooltip("The maximum amount of rounds this weapon has."),SerializeField]
+    private int _maxRound;
+    
+    [Tooltip("The damage this weapon deals."),SerializeField]
+    private float _damage;
+
+    [Tooltip("The number of rounds increased every time the player picks up this object."), SerializeField]
+    private int _pickUpIncrease;
 
     /// <summary>
     /// This method is called when the firing mouse button is pressed down.
@@ -31,11 +41,33 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     public abstract void FireUp();
 
+    public virtual void AddRound()
+    {
+        CurrentRound += PickUpIncrease;
+        CurrentRound = Mathf.Min(CurrentRound, MaxRound);
+    }
+
 #if UNITY_EDITOR
     protected virtual void OnValidate()
     {
         MaxRound = _maxRound;
+        CurrentRound = MaxRound;
         Damage = _damage;
+        PickUpIncrease = _pickUpIncrease;
     }
 #endif
+
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerController controller = other.GetComponent<PlayerController>();
+            if (!controller)
+                return;
+            controller.AddWeaponToInventory(this);
+            
+            // Destroy collider
+            Destroy(other);
+        }
+    }
 }
