@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.Mathematics;
@@ -6,36 +7,41 @@ using Unity.Mathematics;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public Weapon[] Weapons { get; private set; }
+    public List<Weapon> Weapons { get; private set; }
 
     [SerializeField] private Transform _weaponMount;
     [SerializeField] private Transform _camera;
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private GameObject _defaultWeapon;
+    
     private Rigidbody2D _rigidbody2D;
     private Weapon _currentWeapon;
-    private int _currentWeaponIndex;
+    private int _currentWeaponIndex = 0;
+    private int _currentWeaponMax = 0;
     private int _maxWeaponCount = 5;
-    private int _currentWeaponMax;
     private Vector2 _direction;
 
     public void AddWeaponToInventory(Weapon weapon)
     {
         // If already have the type of weapon in inventory, increase its load and switch to it
         Weapon weaponInInventory = Weapons.FirstOrDefault(x => x.GetType() == weapon.GetType());
-        if (weaponInInventory != null)
+        if (weaponInInventory)
         {
             weaponInInventory.AddRound();
-            int weaponIndex = Array.IndexOf(Weapons, weaponInInventory);
+            int weaponIndex = Weapons.IndexOf(weaponInInventory);
             SwitchToWeapon(weaponIndex);
         } 
         // If don't have weapon in inventory and inventory is not full yet, add to the end and switch to it
         else if (_currentWeaponMax < _maxWeaponCount)
         {
-            _currentWeaponMax++;
-            GameObject go = new GameObject($"Temp {weapon}", weapon.GetType()); //TODO: might just get the parent class type
-            go.transform.SetParent(_weaponMount);
-            go.transform.localPosition = Vector2.zero;
+            GameObject go = Instantiate(weapon.PrefabReference, _weaponMount);
+            go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = quaternion.identity;
+            // Collider for pickup detection is not needed once equipped.
+            go.GetComponent<CircleCollider2D>().enabled = false;
+            
+            _currentWeaponMax++;
+            Weapons.Add(go.GetComponent<Weapon>());
             SwitchToWeapon(_currentWeaponMax - 1);
         }
         else
@@ -47,10 +53,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        Weapons = new Weapon[5];
-        Weapons[0] = _weaponMount.gameObject.AddComponent<HandCrankFlashlight>(); //TODO: wrong
-        _currentWeaponIndex = 0;
-        _currentWeaponMax = 1;
+        Weapons = new List<Weapon>();
+        AddWeaponToInventory(_defaultWeapon.GetComponent<Weapon>());
     }
 
     private void Update()
