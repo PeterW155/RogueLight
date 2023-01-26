@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using Unity.Mathematics;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -37,9 +36,10 @@ public class PlayerController : MonoBehaviour
             GameObject go = Instantiate(weapon.PrefabReference, _weaponMount);
             go.transform.localPosition = Vector3.zero;
             go.transform.localRotation = quaternion.identity;
-            // Collider for pickup detection is not needed once equipped.
-            go.GetComponent<CircleCollider2D>().enabled = false;
             
+            // Collider for pickup detection is not needed once equipped.
+            go.GetComponent<Weapon>().PickupBox.enabled = false;
+
             _currentWeaponMax++;
             Weapons.Add(go.GetComponent<Weapon>());
             SwitchToWeapon(_currentWeaponMax - 1);
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     
     private void SwitchToWeapon(int index)
     {
-        if (index < 0 || index > _currentWeaponMax || index == _currentWeaponIndex || !Weapons[index])
+        if (index < 0 || index > _currentWeaponMax || !Weapons[index])
             return;
         
         Weapons[_currentWeaponIndex].gameObject.SetActive(false);

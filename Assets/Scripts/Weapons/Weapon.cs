@@ -27,6 +27,16 @@ public abstract class Weapon : MonoBehaviour
     /// The Prefab associated with this weapon type.
     /// </summary>
     public GameObject PrefabReference { get; protected set; }
+    
+    /// <summary>
+    /// The Collider2D that is used to detect player picking it up.
+    /// </summary>
+    public CircleCollider2D PickupBox { get; protected set; }
+    
+    /// <summary>
+    /// The Collider2D that is enabled when firing.
+    /// </summary>
+    public Collider2D DamageBox { get; protected set; }
 
     [Tooltip("The maximum amount of rounds this weapon has."),SerializeField]
     private int _maxRound;
@@ -39,6 +49,12 @@ public abstract class Weapon : MonoBehaviour
 
     [Tooltip("The Prefab associated with this weapon type."), SerializeField]
     private GameObject _prefabReference;
+    
+    [Tooltip("The Collider2D that is used to detect player picking it up."), SerializeField]
+    private CircleCollider2D _pickupBox;
+    
+    [Tooltip("The Collider2D that is enabled when firing."), SerializeField]
+    private Collider2D _damageBox;
 
     /// <summary>
     /// This method is called when the firing mouse button is pressed down.
@@ -56,16 +72,21 @@ public abstract class Weapon : MonoBehaviour
         CurrentRound = Mathf.Min(CurrentRound, MaxRound);
     }
 
-#if UNITY_EDITOR
-    protected virtual void OnValidate()
+    protected virtual void Awake()
     {
         MaxRound = _maxRound;
         CurrentRound = MaxRound;
         Damage = _damage;
         PickUpIncrease = _pickUpIncrease;
         PrefabReference = _prefabReference;
+        PickupBox = _pickupBox;
+        DamageBox = _damageBox;
+
+        PickupBox.enabled = true; // Will be set to false by PlayerController when being picked up
+        PickupBox.isTrigger = true;
+        DamageBox.enabled = false; // Only turn on when firing
+        DamageBox.isTrigger = true;
     }
-#endif
 
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
