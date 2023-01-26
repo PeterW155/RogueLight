@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private int _currentWeaponMax = 0;
     private int _maxWeaponCount = 5;
     private Vector2 _direction;
+    private float _rotateAngle;
 
     public void AddWeaponToInventory(Weapon weapon)
     {
@@ -61,13 +62,14 @@ public class PlayerController : MonoBehaviour
     {
         GetSwapWeaponInput();
         GetDirectionInput();
-        Rotate();
+        GetRotationInput();
         GetFireInput();
     }
 
     private void FixedUpdate()
     {
         Move();
+        Rotate();
     }
 
     private void LateUpdate()
@@ -114,13 +116,12 @@ public class PlayerController : MonoBehaviour
             Fire(false);
     }
 
-    private void Rotate()
+    private void GetRotationInput()
     {
         Vector2 mousePosition = Input.mousePosition;
         mousePosition -= new Vector2(0.5f * Screen.width, 0.5f * Screen.height);
         mousePosition.Normalize();
-        float angle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg - 90.0f;
-        _rigidbody2D.MoveRotation(angle);
+        _rotateAngle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg - 90.0f;
     }
     
     private void SwitchToWeapon(int index)
@@ -139,6 +140,8 @@ public class PlayerController : MonoBehaviour
         Vector2 currentPosition = _rigidbody2D.position;
         _rigidbody2D.MovePosition(currentPosition + _moveSpeed * Time.fixedDeltaTime * _direction);
     }
+
+    private void Rotate() => _rigidbody2D.MoveRotation(_rotateAngle);
 
     private void Fire(bool isFireDown)
     {
