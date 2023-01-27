@@ -57,12 +57,12 @@ public abstract class Weapon : MonoBehaviour
     private Collider2D _damageBox;
 
     /// <summary>
-    /// This method is called when the firing mouse button is pressed down.
+    /// FireDown is called when the firing mouse button is pressed down.
     /// </summary>
     public abstract void FireDown();
     
     /// <summary>
-    /// This method is called when the firing mouse button is released.
+    /// FireUp is called when the firing mouse button is released.
     /// </summary>
     public abstract void FireUp();
 
@@ -98,6 +98,13 @@ public abstract class Weapon : MonoBehaviour
             controller.AddWeaponToInventory(this);
             
             Destroy(gameObject);
+        }
+
+        // If PickupBox is disabled, that means the weapon is used as a weapon rather than a pickup
+        // Then, when colliding with an Enemy, it should deal damage
+        if (col.CompareTag("Enemy") && !PickupBox.enabled)
+        {
+            //TODO: Do damage to enemy
         }
     }
 }
