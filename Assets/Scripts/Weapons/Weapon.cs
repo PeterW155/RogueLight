@@ -6,7 +6,7 @@ public abstract class Weapon : MonoBehaviour
     /// <summary>
     /// The maximum amount of rounds this weapon has.
     /// </summary>
-    public int MaxRound { get; protected set; } = 0;
+    public int MaxRound => _maxRound;
     
     /// <summary>
     /// The current amount of rounds this weapon has.
@@ -16,36 +16,37 @@ public abstract class Weapon : MonoBehaviour
     /// <summary>
     /// The damage this weapon deals.
     /// </summary>
-    public float Damage { get; protected set; } = 0.0f;
-    
+    public float Damage => _damage;
+
     /// <summary>
     /// The number of rounds increased every time the player picks up this object.
     /// </summary>
-    public int PickUpIncrease { get; protected set; }
-    
+    public int PickUpIncrease => _pickUpIncrease;
+
     /// <summary>
     /// The Prefab associated with this weapon type.
     /// </summary>
-    public GameObject PrefabReference { get; protected set; }
-    
+    // public GameObject PrefabReference { get; protected set; }
+    public GameObject PrefabReference => _prefabReference;
+
     /// <summary>
     /// The Collider2D that is used to detect player picking it up.
     /// </summary>
-    public CircleCollider2D PickupBox { get; protected set; }
-    
+    public CircleCollider2D PickupBox => _pickupBox;
+
     /// <summary>
     /// The Collider2D that is enabled when firing.
     /// </summary>
-    public Collider2D DamageBox { get; protected set; }
+    public Collider2D DamageBox => _damageBox;
 
     [Tooltip("The maximum amount of rounds this weapon has."),SerializeField]
-    private int _maxRound;
+    private int _maxRound = 0; 
     
     [Tooltip("The damage this weapon deals."),SerializeField]
-    private float _damage;
+    private float _damage = 0.0f;
 
     [Tooltip("The number of rounds increased every time the player picks up this object."), SerializeField]
-    private int _pickUpIncrease;
+    private int _pickUpIncrease = 0;
 
     [Tooltip("The Prefab associated with this weapon type."), SerializeField]
     private GameObject _prefabReference;
@@ -74,14 +75,8 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void Awake()
     {
-        MaxRound = _maxRound;
         CurrentRound = MaxRound;
-        Damage = _damage;
-        PickUpIncrease = _pickUpIncrease;
-        PrefabReference = _prefabReference;
-        PickupBox = _pickupBox;
-        DamageBox = _damageBox;
-
+        
         PickupBox.enabled = true; // Will be set to false by PlayerController when being picked up
         PickupBox.isTrigger = true;
         DamageBox.enabled = false; // Only turn on when firing
@@ -104,7 +99,7 @@ public abstract class Weapon : MonoBehaviour
         // Then, when colliding with an Enemy, it should deal damage
         if (col.CompareTag("Enemy") && !PickupBox.enabled)
         {
-            //TODO: Do damage to enemy
+            col.GetComponent<SimpleEnemy>().DamageEnemy(Damage);
         }
     }
 }

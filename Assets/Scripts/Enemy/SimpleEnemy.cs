@@ -11,13 +11,11 @@ public class SimpleEnemy : MonoBehaviour
     private GameObject player;
     private float distance;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectsWithTag("Player")[0];
     }
 
-    // Update is called once per frame
     void Update()
     {
         distance = Vector2.Distance(transform.position, player.transform.position);
@@ -28,15 +26,15 @@ public class SimpleEnemy : MonoBehaviour
 
     public void DamageEnemy(float damage)
     {
-        health = -damage;
+        health -= damage;
         if(health <= 0)
         {
             EnemyDie();
         }
     }
 
-    public void EnemyDie()
+    private void EnemyDie()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }
