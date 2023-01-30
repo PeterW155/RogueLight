@@ -12,7 +12,7 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // textBox.text = timeStart.ToString();
+        textBox.text = timeStart.ToString();
         currentTime = timeStart;
     }
 
@@ -20,6 +20,6 @@ public class Timer : MonoBehaviour
     void Update()
     {
         currentTime += 1 * Time.deltaTime;
-        //textBox.text = "Time: " + currentTime.ToString("0");
+        textBox.text = "Time: " + currentTime.ToString("0");
     }
 }
