@@ -20,6 +20,6 @@ public class Timer : MonoBehaviour
     void Update()
     {
         currentTime += 1 * Time.deltaTime;
-        textBox.text = "Time: " + currentTime.ToString("0");
+        //textBox.text = "Time: " + currentTime.ToString("0");
     }
 }
