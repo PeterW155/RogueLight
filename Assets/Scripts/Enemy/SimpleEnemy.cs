@@ -8,6 +8,7 @@ public class SimpleEnemy : MonoBehaviour
     public float health;
     public float speed;
     public float damage;
+    public int points;
 
     private GameObject player;
     private float distance;
