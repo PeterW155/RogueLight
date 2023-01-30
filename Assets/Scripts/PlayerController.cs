@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.Mathematics;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     public List<Weapon> Weapons { get; private set; }
+    public float Health => _health;
 
     [SerializeField] private Transform _weaponMount;
     [SerializeField] private Transform _camera;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private GameObject _defaultWeapon;
+    [SerializeField] private float _maxHealth;
     
     private Rigidbody2D _rigidbody2D;
     private Weapon _currentWeapon;
@@ -20,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private int _maxWeaponCount = 5;
     private Vector2 _direction;
     private float _rotateAngle;
+    private float _health;
 
     public void AddWeaponToInventory(Weapon weapon)
     {
@@ -51,11 +55,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float value)
+    {
+        _health -= value;
+        if (_health < 0.0f)
+        {
+            SceneManager.LoadScene("TestScene");
+        }
+    }
+
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         Weapons = new List<Weapon>();
         AddWeaponToInventory(_defaultWeapon.GetComponent<Weapon>());
+        _health = _maxHealth;
     }
 
     private void Update()

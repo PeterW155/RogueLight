@@ -226,6 +226,7 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _moveSpeed: 10
   _defaultWeapon: {fileID: 7600599879955423633, guid: 646b14f698e91504f9f1a48d4f5daf9d, type: 3}
+  _maxHealth: 100
 --- !u!1 &7333395800874580441
 GameObject:
   m_ObjectHideFlags: 0
