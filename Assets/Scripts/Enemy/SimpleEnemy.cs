@@ -36,5 +36,6 @@ public class SimpleEnemy : MonoBehaviour
     private void EnemyDie()
     {
         Destroy(gameObject);
+        ScoreManager.instance.AddPoint();
     }
 }
