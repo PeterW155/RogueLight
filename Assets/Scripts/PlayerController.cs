@@ -1,8 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.Mathematics;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private GameObject _defaultWeapon;
     [SerializeField] private float _maxHealth;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    // [SerializeField] private Image _healthBar;
     
     private Rigidbody2D _rigidbody2D;
     private Weapon _currentWeapon;
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _direction;
     private float _rotateAngle;
     private float _health;
+    private IEnumerator _flashRed;
 
     public void AddWeaponToInventory(Weapon weapon)
     {
@@ -58,9 +62,29 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float value)
     {
         _health -= value;
+        if (_spriteRenderer)
+        {
+            if (_flashRed != null)
+                StopCoroutine(_flashRed);
+            _flashRed = FlashRedForSeconds(0.2f);
+            StartCoroutine(_flashRed);
+        }
+
+        // if (_healthBar)
+        // {
+        //     _healthBar.fillAmount = _health / _maxHealth;
+        // }
+        
         if (_health < 0.0f)
         {
             GameManager.Instance.LoseGame();
+        }
+
+        IEnumerator FlashRedForSeconds(float seconds)
+        {
+            _spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(seconds);
+            _spriteRenderer.color = Color.white;
         }
     }
 
@@ -70,6 +94,7 @@ public class PlayerController : MonoBehaviour
         Weapons = new List<Weapon>();
         AddWeaponToInventory(_defaultWeapon.GetComponent<Weapon>());
         _health = _maxHealth;
+        // _healthBar.fillMethod = Image.FillMethod.Horizontal;
     }
 
     private void Update()
