@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         _health -= value;
         if (_health < 0.0f)
         {
-            SceneManager.LoadScene("TestScene");
+            GameManager.Instance.LoseGame();
         }
     }
 
