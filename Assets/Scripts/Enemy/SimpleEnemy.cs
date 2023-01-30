@@ -7,6 +7,7 @@ public class SimpleEnemy : MonoBehaviour
 
     public float health;
     public float speed;
+    public float damage;
 
     private GameObject player;
     private float distance;
@@ -37,5 +38,14 @@ public class SimpleEnemy : MonoBehaviour
     {
         Destroy(gameObject);
         ScoreManager.instance.AddPoint();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            //Debug.Log("hit player");
+            //collision.TakeDamage(damage);
+        }
     }
 }
