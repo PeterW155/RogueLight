@@ -24,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnEnemy();
             timer = maxTime;
+            maxTime = maxTime - 0.5f;
         }
     }
 
