@@ -13,13 +13,13 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable, IEnemyKillable
     private SpriteRenderer _spriteRenderer;
     private IEnumerator _flashRed;
 
-    void Start()
+    protected void Start()
     {
         _player = GameObject.FindGameObjectsWithTag("Player")[0];
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Update()
+    protected void Update()
     {
         transform.position = Vector2.MoveTowards(this.transform.position, _player.transform.position, speed * Time.deltaTime);
     }
