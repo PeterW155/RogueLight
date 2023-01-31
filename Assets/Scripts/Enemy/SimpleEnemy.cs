@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemy;
 using UnityEngine;
 
-public class SimpleEnemy : MonoBehaviour
+public class SimpleEnemy : MonoBehaviour, IEnemyDamageable, IEnemyKillable
 {
 
     public float health;
@@ -31,11 +32,11 @@ public class SimpleEnemy : MonoBehaviour
         health -= damage;
         if(health <= 0)
         {
-            EnemyDie();
+            KillEnemy();
         }
     }
 
-    private void EnemyDie()
+    public void KillEnemy()
     {
         Destroy(gameObject);
         ScoreManager.instance.AddPoint();

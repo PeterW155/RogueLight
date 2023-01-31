@@ -1,3 +1,4 @@
+using Enemy;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -102,7 +103,7 @@ public abstract class Weapon : MonoBehaviour
         // Then, when colliding with an Enemy, it should deal damage
         if (col.CompareTag("Enemy") && !PickupBox.enabled)
         {
-            col.GetComponent<SimpleEnemy>().DamageEnemy(Damage);
+            col.GetComponent<IEnemyDamageable>().DamageEnemy(Damage);
         }
     }
 }
