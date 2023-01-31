@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Enemy;
 using UnityEngine;
 
@@ -9,30 +8,39 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable, IEnemyKillable
     public float health;
     public float speed;
     public float damage;
-    public int points;
 
-    private GameObject player;
-    private float distance;
+    private GameObject _player;
+    private SpriteRenderer _spriteRenderer;
+    private IEnumerator _flashRed;
 
     void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
+        _player = GameObject.FindGameObjectsWithTag("Player")[0];
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        distance = Vector2.Distance(transform.position, player.transform.position);
-        Vector2 direction = player.transform.position - transform.position;
-
-        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(this.transform.position, _player.transform.position, speed * Time.deltaTime);
     }
 
     public void DamageEnemy(float damage)
     {
+        if (_flashRed != null)
+            StopCoroutine(_flashRed);
+        StartCoroutine(FlashRedForSeconds(0.2f));
+        
         health -= damage;
         if(health <= 0)
         {
             KillEnemy();
+        }
+        
+        IEnumerator FlashRedForSeconds(float seconds)
+        {
+            _spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(seconds);
+            _spriteRenderer.color = Color.white;
         }
     }
 
