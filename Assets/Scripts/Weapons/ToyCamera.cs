@@ -20,7 +20,7 @@ public class ToyCamera : Weapon
         if (Time.time < _lastActivationTime + _cooldownDuration)
             return;
 
-        if (CurrentRound < 0)
+        if (CurrentRound <= 0)
             return;
         
         CurrentRound--;
