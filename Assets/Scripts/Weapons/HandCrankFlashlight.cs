@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class HandCrankFlashlight : Weapon
 {
-    [SerializeField] private GameObject _damageBoxVisual;
     [SerializeField] private float _activationDuration;
     [SerializeField] private float _cooldownDuration;
 

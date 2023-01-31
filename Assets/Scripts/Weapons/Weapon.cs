@@ -38,7 +38,7 @@ public abstract class Weapon : MonoBehaviour
     /// The Collider2D that is enabled when firing.
     /// </summary>
     public Collider2D DamageBox => _damageBox;
-
+    
     [Tooltip("The maximum amount of rounds this weapon has."),SerializeField]
     private int _maxRound = 0; 
     
@@ -56,6 +56,9 @@ public abstract class Weapon : MonoBehaviour
     
     [Tooltip("The Collider2D that is enabled when firing."), SerializeField]
     private Collider2D _damageBox;
+    
+    [Tooltip("The Child GameObject that has a Sprite to represent that visual of the damage box."), SerializeField]
+    protected GameObject _damageBoxVisual;
 
     /// <summary>
     /// FireDown is called when the firing mouse button is pressed down.
