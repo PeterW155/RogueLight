@@ -1,8 +1,7 @@
 using System.Collections;
-using Enemy;
 using UnityEngine;
 
-public class SimpleEnemy : MonoBehaviour, IEnemyDamageable, IEnemyKillable
+public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
 {
 
     public float health;
@@ -44,7 +43,7 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable, IEnemyKillable
         }
     }
 
-    public void KillEnemy()
+    private void KillEnemy()
     {
         Destroy(gameObject);
         ScoreManager.instance.AddPoint();

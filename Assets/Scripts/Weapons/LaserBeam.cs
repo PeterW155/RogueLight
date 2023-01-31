@@ -1,6 +1,3 @@
-using System;
-using Enemy;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LaserBeam : MonoBehaviour

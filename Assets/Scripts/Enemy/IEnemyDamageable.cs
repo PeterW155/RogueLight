@@ -1,7 +1,4 @@
-﻿namespace Enemy
+﻿public interface IEnemyDamageable
 {
-    public interface IEnemyDamageable
-    {
-        public void DamageEnemy(float value);
-    }
+    public void DamageEnemy(float value);
 }
