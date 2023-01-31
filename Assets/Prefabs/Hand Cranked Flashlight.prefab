@@ -233,3 +233,5 @@ MonoBehaviour:
   _pickupBox: {fileID: 7600599879955423639}
   _damageBox: {fileID: 2551300113845252348}
   _damageBoxVisual: {fileID: 2742705680212449018}
+  _activationDuration: 0.1
+  _cooldownDuration: 0.75
