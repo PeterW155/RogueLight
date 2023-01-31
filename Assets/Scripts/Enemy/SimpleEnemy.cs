@@ -45,8 +45,9 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
 
     private void KillEnemy()
     {
-        Destroy(gameObject);
         ScoreManager.instance.AddPoint();
+        DropManager.Instance.NotifyDeath(this);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
