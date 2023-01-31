@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _defaultWeapon;
     [SerializeField] private float _maxHealth;
     [SerializeField] private SpriteRenderer _spriteRenderer;
-    // [SerializeField] private Image _healthBar;
+    [SerializeField] private Image _healthBar;
     
     private Rigidbody2D _rigidbody2D;
     private Weapon _currentWeapon;
@@ -70,10 +70,10 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(_flashRed);
         }
 
-        // if (_healthBar)
-        // {
-        //     _healthBar.fillAmount = _health / _maxHealth;
-        // }
+        if (_healthBar)
+        {
+            _healthBar.fillAmount = _health / _maxHealth;
+        }
         
         if (_health < 0.0f)
         {
