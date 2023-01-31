@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     
     private void SwitchToWeapon(int index)
     {
-        if (index < 0 || index > _currentWeaponMax || !Weapons[index])
+        if (index < 0 || index >= _currentWeaponMax)
             return;
         
         Weapons[_currentWeaponIndex].gameObject.SetActive(false);
