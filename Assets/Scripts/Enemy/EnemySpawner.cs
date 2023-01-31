@@ -24,7 +24,8 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnEnemy();
             timer = maxTime;
-            maxTime = maxTime - 0.5f;
+            maxTime -= 0.5f;
+            maxTime = Mathf.Max(maxTime, 0.0f);
         }
     }
 
