@@ -3,7 +3,7 @@ public class Laser : Weapon
 {
     [SerializeField] private float _cooldownDuration;
     [SerializeField] private Transform _muzzle;
-    [SerializeField] private LaserBeam _laserBeam;
+    [SerializeField] private Projectile _laserBeam;
     [SerializeField] private float _beamLiftSpan;
     [SerializeField] private float _beamSpeed;
     

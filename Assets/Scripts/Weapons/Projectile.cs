@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LaserBeam : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     public float Damage { get; set; }
     public float Speed { get; set; }
