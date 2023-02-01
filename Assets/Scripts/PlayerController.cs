@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ public class PlayerController : MonoBehaviour
 {
     public List<Weapon> Weapons { get; private set; }
     public float Health => _health;
+    public event Action<int, Weapon> WeaponFired;
+    public event Action<int, Weapon> WeaponAdded;
+    public event Action<int> WeaponSwitched;
 
     [SerializeField] private Transform _weaponMount;
     [SerializeField] private Transform _camera;
@@ -49,9 +53,11 @@ public class PlayerController : MonoBehaviour
             // Collider for pickup detection is not needed once equipped.
             go.GetComponent<Weapon>().PickupBox.enabled = false;
 
+            int next = _currentWeaponMax;
             _currentWeaponMax++;
             Weapons.Add(go.GetComponent<Weapon>());
-            SwitchToWeapon(_currentWeaponMax - 1);
+            WeaponAdded?.Invoke(next, Weapons[next]);
+            SwitchToWeapon(next);
         }
         else
         {
@@ -172,6 +178,7 @@ public class PlayerController : MonoBehaviour
         _currentWeaponIndex = index;
         _currentWeapon = Weapons[index];
         Weapons[index].gameObject.SetActive(true);
+        WeaponSwitched?.Invoke(index);
     }
 
     private void Move()
@@ -191,5 +198,6 @@ public class PlayerController : MonoBehaviour
            _currentWeapon.FireDown();
         else
             _currentWeapon.FireUp();
+        WeaponFired?.Invoke(_currentWeaponIndex, _currentWeapon);
     }
 }
