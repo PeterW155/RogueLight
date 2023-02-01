@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6971071544058559428}
   - component: {fileID: 6971071544058559431}
   - component: {fileID: 6971071544058559430}
-  - component: {fileID: 6971071544058559425}
   - component: {fileID: 495761235566657326}
+  - component: {fileID: 6971071544058559425}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Enemy
@@ -103,21 +103,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &6971071544058559425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6971071544058559424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b092753898cfeb4f85b13664ec8bcbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 50
-  speed: 3.5
-  damage: 0
 --- !u!50 &495761235566657326
 Rigidbody2D:
   serializedVersion: 4
@@ -139,3 +124,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6971071544058559425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6971071544058559424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b092753898cfeb4f85b13664ec8bcbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  speed: 3.5
+  damage: 0
+  spriteFacesLeft: 1

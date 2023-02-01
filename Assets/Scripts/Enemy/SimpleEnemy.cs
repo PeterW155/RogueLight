@@ -11,16 +11,36 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
     private GameObject _player;
     private SpriteRenderer _spriteRenderer;
     private IEnumerator _flashRed;
+    private bool _spriteFacesLeft;
 
     protected void Start()
     {
         _player = GameObject.FindGameObjectsWithTag("Player")[0];
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteFacesLeft = !_spriteRenderer.flipX;
     }
 
     protected void Update()
     {
         transform.position = Vector2.MoveTowards(this.transform.position, _player.transform.position, speed * Time.deltaTime);
+
+        float xDirection = (_player.transform.position - transform.position).x;
+        
+        // If is going left but is currently not facing left
+        if (xDirection < 0)
+        {
+            if (_spriteFacesLeft && _spriteRenderer.flipX)
+                _spriteRenderer.flipX = false;
+            else if (!_spriteFacesLeft && !_spriteRenderer.flipX)
+                _spriteRenderer.flipX = true;
+        }
+        else
+        {
+            if (_spriteFacesLeft && !_spriteRenderer.flipX)
+                _spriteRenderer.flipX = true;
+            else if (!_spriteFacesLeft && _spriteRenderer.flipX)
+                _spriteRenderer.flipX = false;
+        }
     }
 
     public void DamageEnemy(float damage)
