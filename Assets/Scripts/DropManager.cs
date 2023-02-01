@@ -24,6 +24,7 @@ public class DropManager : MonoBehaviour
             if (randomValue > weaponDrop.DropRate)
                 continue;
             Instantiate(weaponDrop.Weapon, enemy.transform.position, Quaternion.identity);
+            break;
         }
     }
 
