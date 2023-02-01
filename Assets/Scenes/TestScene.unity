@@ -1825,6 +1825,10 @@ PrefabInstance:
       propertyPath: _camera
       value: 
       objectReference: {fileID: 788986039}
+    - target: {fileID: 3557839324261151111, guid: 9ad484ecdb13b124eabfe0445ea07e5d, type: 3}
+      propertyPath: _defaultWeapon
+      value: 
+      objectReference: {fileID: 7600599879955423633, guid: 646b14f698e91504f9f1a48d4f5daf9d, type: 3}
     - target: {fileID: 4920162050239760253, guid: 9ad484ecdb13b124eabfe0445ea07e5d, type: 3}
       propertyPath: m_Name
       value: Player
