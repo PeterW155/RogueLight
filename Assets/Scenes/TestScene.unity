@@ -2905,14 +2905,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 457425034624940527, guid: 2d18521353284b4448c65a433a3eeb20, type: 3}
-      propertyPath: _drops.Array.data[0].DropRate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457425034624940527, guid: 2d18521353284b4448c65a433a3eeb20, type: 3}
-      propertyPath: _drops.Array.data[1].DropRate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1561511118190026880, guid: 2d18521353284b4448c65a433a3eeb20, type: 3}
       propertyPath: m_RootOrder
       value: 1

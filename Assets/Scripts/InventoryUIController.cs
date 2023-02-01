@@ -50,13 +50,14 @@ public class InventoryUIController : MonoBehaviour
         LoadIcon(index, weapon);
     }
 
-    private void OnWeaponSwitched(int index)
+    private void OnWeaponSwitched(int index, Weapon weapon)
     {
         foreach (var pair in _countPairs)
         {
             pair.Icon.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         }
         _countPairs[index].Icon.color = Color.white;
+        _countPairs[index].Count.text = weapon.CurrentRound + "/" + weapon.MaxRound;
     }
 
     private void LoadIcon(int index, Weapon weapon)

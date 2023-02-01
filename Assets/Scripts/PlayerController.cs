@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public float Health => _health;
     public event Action<int, Weapon> WeaponFired;
     public event Action<int, Weapon> WeaponAdded;
-    public event Action<int> WeaponSwitched;
+    public event Action<int, Weapon> WeaponSwitched;
 
     [SerializeField] private Transform _weaponMount;
     [SerializeField] private Transform _camera;
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
         _currentWeaponIndex = index;
         _currentWeapon = Weapons[index];
         Weapons[index].gameObject.SetActive(true);
-        WeaponSwitched?.Invoke(index);
+        WeaponSwitched?.Invoke(index, Weapons[index]);
     }
 
     private void Move()
