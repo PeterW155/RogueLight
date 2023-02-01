@@ -29,20 +29,9 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy()
+    private void SpawnEnemy()
     {
-        int rand = (int)Random.Range(0, 10);
-        if(rand <= 4)
-        {
-            Instantiate(enemies[0], this.transform);
-        }
-        else if(rand <= 8)
-        {
-            Instantiate(enemies[1], this.transform);
-        }
-        else if (rand <= 10)
-        {
-            Instantiate(enemies[2], this.transform);
-        }
+        int rand = Random.Range(0, enemies.Length);
+        Instantiate(enemies[rand], transform);
     }
 }

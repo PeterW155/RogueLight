@@ -8,26 +8,31 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
     public float speed;
     public float damage;
 
-    private GameObject _player;
+    protected GameObject _player;
+    protected Vector2 _toPlayerDirection;
+    protected float _toPlayerDistance;
     private SpriteRenderer _spriteRenderer;
     private IEnumerator _flashRed;
     private bool _spriteFacesLeft;
 
-    protected void Start()
+    protected virtual void Start()
     {
         _player = GameObject.FindGameObjectsWithTag("Player")[0];
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteFacesLeft = !_spriteRenderer.flipX;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         transform.position = Vector2.MoveTowards(this.transform.position, _player.transform.position, speed * Time.deltaTime);
 
-        float xDirection = (_player.transform.position - transform.position).x;
-        
+        _toPlayerDirection = _player.transform.position - transform.position;
+        _toPlayerDistance = _toPlayerDirection.magnitude;
+        _toPlayerDirection.Normalize();
+        var movingLeft = _toPlayerDirection.x < 0;
+
         // If is going left but is currently not facing left
-        if (xDirection < 0)
+        if (movingLeft)
         {
             if (_spriteFacesLeft && _spriteRenderer.flipX)
                 _spriteRenderer.flipX = false;
@@ -47,7 +52,8 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
     {
         if (_flashRed != null)
             StopCoroutine(_flashRed);
-        StartCoroutine(FlashRedForSeconds(0.2f));
+        _flashRed = FlashRedForSeconds(0.2f);
+        StartCoroutine(_flashRed);
         
         health -= damage;
         if(health <= 0)
@@ -60,6 +66,7 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
             _spriteRenderer.color = Color.red;
             yield return new WaitForSeconds(seconds);
             _spriteRenderer.color = Color.white;
+            yield return null;
         }
     }
 
