@@ -11,6 +11,8 @@ public class Laser : Weapon
     
     public override void FireDown()
     {
+        base.FireDown();
+        
         if (Time.time < _lastActivationTime + _cooldownDuration)
             return;
 
@@ -19,12 +21,11 @@ public class Laser : Weapon
         
         CurrentRound--;
         _lastActivationTime = Time.time;
+        SFXSource.Play();
 
         var beam = Instantiate(_laserBeam, _muzzle.position, _muzzle.rotation);
         beam.Damage = Damage;
         beam.Speed = _beamSpeed;
         Destroy(beam, _beamLiftSpan);
     }
-
-    public override void FireUp() { }
 }

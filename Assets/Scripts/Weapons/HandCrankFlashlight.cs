@@ -16,6 +16,8 @@ public class HandCrankFlashlight : Weapon
 
     public override void FireDown()
     {
+        base.FireDown();
+        
         if (Time.time < _lastActivationTime + _cooldownDuration)
             return;
 
@@ -25,6 +27,7 @@ public class HandCrankFlashlight : Weapon
             DamageBox.enabled = true;
         if (_damageBoxVisual)
             _damageBoxVisual.SetActive(true);
+        SFXSource.Play();
 
         StartCoroutine(TurnOff());
     }
@@ -37,6 +40,4 @@ public class HandCrankFlashlight : Weapon
         if (_damageBoxVisual)
             _damageBoxVisual.SetActive(false);
     }
-
-    public override void FireUp() { }
 }

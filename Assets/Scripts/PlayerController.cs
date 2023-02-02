@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Image _healthBar;
+    [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private AudioClip _playerDamageSFX;
+    [SerializeField] private AudioClip _playerDieSFX;
     
     private Rigidbody2D _rigidbody2D;
     private Weapon _currentWeapon;
@@ -84,6 +87,11 @@ public class PlayerController : MonoBehaviour
         if (_health < 0.0f)
         {
             GameManager.Instance.LoseGame();
+            _sfxSource.PlayOneShot(_playerDieSFX);
+        }
+        else
+        {
+            _sfxSource.PlayOneShot(_playerDamageSFX);
         }
 
         IEnumerator FlashRedForSeconds(float seconds)
@@ -100,7 +108,6 @@ public class PlayerController : MonoBehaviour
         Weapons = new List<Weapon>();
         AddWeaponToInventory(_defaultWeapon.GetComponent<Weapon>());
         _health = _maxHealth;
-        // _healthBar.fillMethod = Image.FillMethod.Horizontal;
     }
 
     private void Update()

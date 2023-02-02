@@ -7,6 +7,7 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
     public float health;
     public float speed;
     public float damage;
+    public AudioClip _dieSFX;
 
     protected GameObject _player;
     protected Vector2 _toPlayerDirection;
@@ -72,6 +73,7 @@ public class SimpleEnemy : MonoBehaviour, IEnemyDamageable
 
     private void KillEnemy()
     {
+        _player.GetComponent<AudioSource>().PlayOneShot(_dieSFX);
         ScoreManager.instance.AddPoint();
         DropManager.Instance.NotifyDeath(this);
         Destroy(gameObject);

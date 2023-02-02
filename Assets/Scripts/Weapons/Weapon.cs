@@ -38,6 +38,11 @@ public abstract class Weapon : MonoBehaviour
     /// The Collider2D that is enabled when firing.
     /// </summary>
     public Collider2D DamageBox => _damageBox;
+
+    /// <summary>
+    /// The audio source responsible for playing a sound when firing the weapon.
+    /// </summary>
+    public AudioSource SFXSource => _sfxSource;
     
     [Tooltip("The maximum amount of rounds this weapon has."),SerializeField]
     private int _maxRound = 0; 
@@ -60,15 +65,18 @@ public abstract class Weapon : MonoBehaviour
     [Tooltip("The Child GameObject that has a Sprite to represent that visual of the damage box."), SerializeField]
     protected GameObject _damageBoxVisual;
 
+    [Tooltip("The audio source responsible for playing a sound when firing the weapon."), SerializeField]
+    private AudioSource _sfxSource;
+
     /// <summary>
     /// FireDown is called when the firing mouse button is pressed down.
     /// </summary>
-    public abstract void FireDown();
-    
+    public virtual void FireDown() { }
+
     /// <summary>
     /// FireUp is called when the firing mouse button is released.
     /// </summary>
-    public abstract void FireUp();
+    public virtual void FireUp() { }
 
     public virtual void AddRound()
     {

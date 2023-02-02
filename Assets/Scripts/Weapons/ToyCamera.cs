@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ToyCamera : Weapon
@@ -17,6 +16,8 @@ public class ToyCamera : Weapon
 
     public override void FireDown()
     {
+        base.FireDown();
+        
         if (Time.time < _lastActivationTime + _cooldownDuration)
             return;
 
@@ -30,6 +31,7 @@ public class ToyCamera : Weapon
             DamageBox.enabled = true;
         if (_damageBoxVisual)
             _damageBoxVisual.SetActive(true);
+        SFXSource.Play();
 
         StartCoroutine(TurnOff());
     }
@@ -42,6 +44,4 @@ public class ToyCamera : Weapon
         if (_damageBoxVisual)
             _damageBoxVisual.SetActive(false);
     }
-
-    public override void FireUp() { }
 }

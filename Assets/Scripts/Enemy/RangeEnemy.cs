@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RangeEnemy : SimpleEnemy
 {
@@ -10,6 +8,7 @@ public class RangeEnemy : SimpleEnemy
     [SerializeField] private float _cooldownDuration;
     [SerializeField] private Projectile _arrow;
     [SerializeField] private float _arrowSpeed;
+    [SerializeField] private AudioSource _launchSFXSource;
 
     private float _lastLaunchTime;
 
@@ -34,6 +33,7 @@ public class RangeEnemy : SimpleEnemy
 
     private void Launch()
     {
+        _launchSFXSource.Play();
         var arrow = Instantiate(_arrow, _muzzle.position, _muzzle.rotation);
         arrow.Damage = damage;
         arrow.Speed = _arrowSpeed;
