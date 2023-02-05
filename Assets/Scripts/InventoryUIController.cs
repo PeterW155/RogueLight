@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
@@ -21,6 +20,7 @@ public class InventoryUIController : MonoBehaviour
         _player.WeaponFired += OnWeaponFired;
         _player.WeaponAdded += OnWeaponAdded;
         _player.WeaponSwitched += OnWeaponSwitched;
+        GameManager.Instance.GameLost += OnGameLost;
 
         foreach (var pair in _countPairs)
         {
@@ -38,6 +38,7 @@ public class InventoryUIController : MonoBehaviour
         _player.WeaponFired -= OnWeaponFired;
         _player.WeaponAdded -= OnWeaponAdded;
         _player.WeaponSwitched -= OnWeaponSwitched;
+        GameManager.Instance.GameLost -= OnGameLost;
     }
 
     private void OnWeaponFired(int index, Weapon weapon)
@@ -58,6 +59,11 @@ public class InventoryUIController : MonoBehaviour
         }
         _countPairs[index].Icon.color = Color.white;
         _countPairs[index].Count.text = weapon.CurrentRound + "/" + weapon.MaxRound;
+    }
+
+    private void OnGameLost()
+    {
+        gameObject.SetActive(false);
     }
 
     private void LoadIcon(int index, Weapon weapon)

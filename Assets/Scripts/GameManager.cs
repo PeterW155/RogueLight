@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public event Action GameLost; 
 
     [SerializeField] private GameObject _loseScreen;
     
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
         {
             _loseScreen.SetActive(true);
         }
+        GameLost?.Invoke();
     }
 
     public void RestartGame()
